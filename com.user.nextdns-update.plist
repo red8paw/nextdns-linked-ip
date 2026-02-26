@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  com.user.nextdns-update.plist
+  launchd user agent — loaded by ~/Library/LaunchAgents/
+
+  This file is a reference template. Run install.sh to generate the real one.
+
+  Customize the ProgramArguments below:
+    --url     Your full NextDNS linked-IP URL (copy from NextDNS dashboard)
+    --interval  Polling interval in seconds (default 300 = 5 min)
+    --macs    Comma-separated router MAC allowlist (remove the key to disable filtering)
+    --verbose Verbose logging (remove if not needed)
+-->
+<plist version="1.0">
+<dict>
+  <!-- Job label — must match the filename -->
+  <key>Label</key>
+  <string>com.user.nextdns-update</string>
+
+  <!-- Full path to the script (set by install.sh) -->
+  <key>ProgramArguments</key>
+  <array>
+    <string>SCRIPT_PATH_PLACEHOLDER</string>
+    <string>--url</string>
+    <string>https://link-ip.nextdns.io/YOUR_ID/YOUR_TOKEN</string>
+    <string>--interval</string>
+    <string>300</string>
+    <!-- Remove the next two lines to disable MAC filtering -->
+    <string>--macs</string>
+    <string>aa:bb:cc:dd:ee:ff,11:22:33:44:55:66</string>
+  </array>
+
+  <!-- Start immediately when loaded -->
+  <key>RunAtLoad</key>
+  <true/>
+
+  <!-- Keep alive if the script exits unexpectedly -->
+  <key>KeepAlive</key>
+  <true/>
+
+  <!-- Throttle restarts: wait 30s before restarting after a crash -->
+  <key>ThrottleInterval</key>
+  <integer>30</integer>
+
+  <!-- Redirect stdout/stderr to log files -->
+  <key>StandardOutPath</key>
+  <string>LOG_DIR_PLACEHOLDER/nextdns-update.log</string>
+  <key>StandardErrorPath</key>
+  <string>LOG_DIR_PLACEHOLDER/nextdns-update.error.log</string>
+</dict>
+</plist>
